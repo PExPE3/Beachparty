@@ -1,9 +1,12 @@
 package net.satisfy.beachparty.forge;
 
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,6 +17,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.satisfy.beachparty.Beachparty;
 import net.satisfy.beachparty.block.furniture.BeachTowelBlock;
+import net.satisfy.beachparty.client.renderer.BeachpartyBoatRenderer;
 import net.satisfy.beachparty.forge.registry.BeachpartyConfig;
 import net.satisfy.beachparty.registry.CompostablesRegistry;
 import net.satisfy.beachparty.registry.ObjectRegistry;
@@ -29,10 +33,6 @@ public class BeachpartyForge {
         modEventBus.addListener(this::commonSetup);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(CompostablesRegistry::init);
-    }
-
     @SubscribeEvent
     public static void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
         BlockState state = event.getLevel().getBlockState(event.getPos());
@@ -41,20 +41,27 @@ public class BeachpartyForge {
         }
     }
 
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(CompostablesRegistry::init);
+    }
+
     @Mod.EventBusSubscriber(modid = Beachparty.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ForgeEventsHandler {
+        @SubscribeEvent
+        public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(BeachpartyBoatRenderer.FLOATY_BOAT_LAYER, BoatModel::createBodyModel);
+            event.registerLayerDefinition(BeachpartyBoatRenderer.FLOATY_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+
+        }
 
         @SubscribeEvent
-        public static void playerSetSpawn(PlayerSetSpawnEvent event)
-        {
+        public static void playerSetSpawn(PlayerSetSpawnEvent event) {
             Level level = event.getEntity().level();
 
-            if(event.getNewSpawn() != null)
-            {
+            if (event.getNewSpawn() != null) {
                 Block block = level.getBlockState(event.getNewSpawn()).getBlock();
 
-                if(!level.isClientSide && block instanceof BeachTowelBlock && !event.isForced())
-                {
+                if (!level.isClientSide && block instanceof BeachTowelBlock && !event.isForced()) {
                     event.setCanceled(true);
                 }
             }

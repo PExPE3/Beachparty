@@ -14,6 +14,7 @@ import net.satisfy.beachparty.Beachparty;
 import net.satisfy.beachparty.block.furniture.BeachTowelBlock;
 import net.satisfy.beachparty.fabric.compat.trinkets.TrinketsCompatibility;
 import net.satisfy.beachparty.fabric.config.ConfigFabric;
+import net.satisfy.beachparty.fabric.registry.FabricBoatRegistry;
 import net.satisfy.beachparty.registry.CompostablesRegistry;
 import net.satisfy.beachparty.util.BeachpartyIdentifier;
 import net.satisfy.beachparty.world.PlacedFeatures;
@@ -28,6 +29,7 @@ public class BeachpartyFabric implements ModInitializer {
         AutoConfig.register(ConfigFabric.class, GsonConfigSerializer::new);
         Beachparty.init();
         CompostablesRegistry.init();
+        FabricBoatRegistry.registerBoats();
         addBiomeModification();
         EntitySleepEvents.ALLOW_SETTING_SPAWN.register((player, sleepingPos) -> {
             boolean onClient = player.level().isClientSide;

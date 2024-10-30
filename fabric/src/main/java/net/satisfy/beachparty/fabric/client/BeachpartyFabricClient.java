@@ -1,18 +1,15 @@
 package net.satisfy.beachparty.fabric.client;
 
+import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
-import net.satisfy.beachparty.Beachparty;
-import net.satisfy.beachparty.client.BeachPartyClient;
+import net.satisfy.beachparty.client.BeachpartyClient;
 import net.satisfy.beachparty.fabric.client.renderer.*;
+import net.satisfy.beachparty.fabric.registry.FabricBoatRegistry;
+import net.satisfy.beachparty.registry.ObjectRegistry;
 import org.lwjgl.glfw.GLFW;
 
 import static net.satisfy.beachparty.registry.ObjectRegistry.*;
@@ -22,8 +19,8 @@ public class BeachpartyFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        BeachPartyClient.preInitClient();
-        BeachPartyClient.initClient();
+        BeachpartyClient.preInitClient();
+        BeachpartyClient.initClient();
         registerKeybind();
         ArmorRenderer.register(new HelmetRenderer(), BEACH_HAT.get(), SUNGLASSES.get());
         ArmorRenderer.register(new ChestplateRenderer(), RUBBER_RING_PINK.get(), RUBBER_RING_BLUE.get(), RUBBER_RING_STRIPPED.get(), RUBBER_RING_AXOLOTL.get(), RUBBER_RING_PELICAN.get(), BIKINI.get(), SWIM_WINGS.get());
@@ -41,7 +38,7 @@ public class BeachpartyFabricClient implements ClientModInitializer {
         TrinketRendererRegistry.registerRenderer(TRUNKS.get(), new DyeableLeggingsTrinketRenderer());
         TrinketRendererRegistry.registerRenderer(CROCS.get(), new DyeableLeggingsTrinketRenderer());
 
-
+        TerraformBoatClientHelper.registerModelLayers(FabricBoatRegistry.FLOATY_BOAT_ID, false);
     }
 
     public static void registerKeybind() {
