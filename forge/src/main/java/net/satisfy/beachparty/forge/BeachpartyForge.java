@@ -24,6 +24,7 @@ import net.satisfy.beachparty.core.block.BeachTowelBlock;
 import net.satisfy.beachparty.core.entity.PalmBoatEntity;
 import net.satisfy.beachparty.core.registry.CompostablesRegistry;
 import net.satisfy.beachparty.core.registry.ObjectRegistry;
+import net.satisfy.beachparty.forge.client.integration.CuriosCompatibility;
 import net.satisfy.beachparty.forge.registry.BeachpartyConfig;
 import net.satisfy.beachparty.platform.forge.PlatformHelperImpl;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -74,6 +75,11 @@ public class BeachpartyForge {
         if (state.getBlock() == ObjectRegistry.RADIO.get()) {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public void setup(FMLCommonSetupEvent event) {
+        CuriosCompatibility.load();
     }
 
     @Mod.EventBusSubscriber(modid = Beachparty.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
