@@ -10,12 +10,13 @@ import net.minecraft.world.phys.Vec3;
 import net.satisfy.beachparty.core.registry.MobEffectRegistry;
 import net.satisfy.beachparty.core.registry.ObjectRegistry;
 import org.joml.Vector3d;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public class CuriosWearableTrinket {
     public static boolean isCurioEquipped(Player player, Item... curios) {
-        return top.theillusivec4.curios.api.CuriosApi.getCuriosHelper().findFirstCurio(player, stack -> {
+        return CuriosApi.getCuriosHelper().findFirstCurio(player, stack -> {
             for (Item curio : curios) {
                 if (stack.getItem() == curio) {
                     return true;
@@ -42,6 +43,17 @@ public class CuriosWearableTrinket {
                     player.hurt(player.level().damageSources().onFire(), 1 - fireDamageReduction);
                 }
             }
+        }
+
+        @Override
+        public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+            LivingEntity entity = slotContext.entity();
+            if (entity instanceof Player player) {
+                removeEffect(player);
+            }
+        }
+
+        protected void removeEffect(Player player) {
         }
 
         @Override
@@ -72,6 +84,11 @@ public class CuriosWearableTrinket {
             if (entity instanceof Player player) {
                 player.addEffect(new MobEffectInstance(MobEffectRegistry.OCEAN_WALK.get(), -1, 0, false, false));
             }
+        }
+
+        @Override
+        protected void removeEffect(Player player) {
+            player.removeEffect(MobEffectRegistry.OCEAN_WALK.get());
         }
     }
 
@@ -156,6 +173,11 @@ public class CuriosWearableTrinket {
                     }
                 }
             }
+        }
+
+        @Override
+        protected void removeEffect(Player player) {
+            player.getCooldowns().removeCooldown(ObjectRegistry.SWIM_WINGS.get());
         }
     }
 }

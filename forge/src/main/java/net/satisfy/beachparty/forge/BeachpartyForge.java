@@ -24,13 +24,12 @@ import net.satisfy.beachparty.core.block.BeachTowelBlock;
 import net.satisfy.beachparty.core.entity.PalmBoatEntity;
 import net.satisfy.beachparty.core.registry.CompostablesRegistry;
 import net.satisfy.beachparty.core.registry.ObjectRegistry;
-import net.satisfy.beachparty.forge.client.integration.CuriosCompatibility;
+import net.satisfy.beachparty.forge.client.integration.CuriosWearableTrinket;
 import net.satisfy.beachparty.forge.registry.BeachpartyConfig;
 import net.satisfy.beachparty.platform.forge.PlatformHelperImpl;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 @Mod(Beachparty.MOD_ID)
 public class BeachpartyForge {
@@ -45,21 +44,29 @@ public class BeachpartyForge {
         modEventBus.addListener(this::enqueueIMC);
     }
 
-    private static class SimpleBeachpartyCurio implements ICurioItem {}
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CompostablesRegistry::init);
-        CuriosApi.registerCurio(ObjectRegistry.BIKINI.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.TRUNKS.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_BLUE.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_PINK.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_STRIPPED.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_PELICAN.get(), new SimpleBeachpartyCurio());
-        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), new SimpleBeachpartyCurio());
+        CuriosApi.registerCurio(ObjectRegistry.BEACH_HAT.get(), new CuriosWearableTrinket.BeachhatCurio());
+        CuriosApi.registerCurio(ObjectRegistry.SUNGLASSES.get(), new CuriosWearableTrinket.SunglassesCurio());
+        CuriosApi.registerCurio(ObjectRegistry.SWIM_WINGS.get(), new CuriosWearableTrinket.SwimWingsCurio());
+        CuriosApi.registerCurio(ObjectRegistry.BIKINI.get(), new CuriosWearableTrinket.SwimSuitCurio());
+        CuriosApi.registerCurio(ObjectRegistry.TRUNKS.get(), new CuriosWearableTrinket.SwimSuitCurio());
+        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_BLUE.get(), new CuriosWearableTrinket.RubberRingCurio());
+        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_PINK.get(), new CuriosWearableTrinket.RubberRingCurio());
+        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_STRIPPED.get(), new CuriosWearableTrinket.RubberRingCurio());
+        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_PELICAN.get(), new CuriosWearableTrinket.RubberRingCurio());
+        CuriosApi.registerCurio(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), new CuriosWearableTrinket.RubberRingCurio());
+        CuriosApi.registerCurio(ObjectRegistry.CROCS.get(), new CuriosWearableTrinket.CrocsCurio());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
+        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("feet").size(1).icon(new ResourceLocation("minecraft", "item/empty_armor_slot_boots")).build());
         InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().build());
+        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().build());
+        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HEAD.getMessageBuilder().build());
     }
+
+
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -75,11 +82,6 @@ public class BeachpartyForge {
         if (state.getBlock() == ObjectRegistry.RADIO.get()) {
             event.setCanceled(true);
         }
-    }
-
-    @SubscribeEvent
-    public void setup(FMLCommonSetupEvent event) {
-        CuriosCompatibility.load();
     }
 
     @Mod.EventBusSubscriber(modid = Beachparty.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)

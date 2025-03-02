@@ -40,13 +40,13 @@ public class BeachpartyClientForge {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             BeachPartyClient.initClient();
-            CuriosRendererRegistry.register(ObjectRegistry.BIKINI.get(), () -> new CuriosBikiniRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.TRUNKS.get(), () -> new CuriosTrunksRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), () -> new CuriosRubberRingBlueRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), () -> new CuriosTrunksRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), () -> new CuriosTrunksRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PELICAN.get(), () -> new CuriosTrunksRenderer());
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), () -> new CuriosTrunksRenderer());
+            CuriosRendererRegistry.register(ObjectRegistry.BIKINI.get(), CuriosBikiniRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.TRUNKS.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), CuriosRubberRingBlueRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PELICAN.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), CuriosTrunksRenderer::new);
         });
     }
 
