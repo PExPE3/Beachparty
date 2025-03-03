@@ -43,8 +43,8 @@ public class BeachpartyClientForge {
             CuriosRendererRegistry.register(ObjectRegistry.BIKINI.get(), CuriosBikiniRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.TRUNKS.get(), CuriosTrunksRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), CuriosRubberRingBlueRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosTrunksRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosRubberRingBlueRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosRubberRingBlueRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PELICAN.get(), CuriosTrunksRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), CuriosTrunksRenderer::new);
         });

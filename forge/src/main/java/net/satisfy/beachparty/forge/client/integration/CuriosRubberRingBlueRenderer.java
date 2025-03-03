@@ -10,8 +10,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.satisfy.beachparty.client.model.BikiniModel;
 import net.satisfy.beachparty.client.model.RubberRingColoredModel;
+import net.satisfy.beachparty.core.registry.ObjectRegistry;
 import net.satisfy.beachparty.core.util.BeachpartyIdentifier;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
@@ -27,21 +27,20 @@ public class CuriosRubberRingBlueRenderer implements ICurioRenderer {
     }
 
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack,
+                                                                          RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer,
+                                                                          int light, float limbSwing, float limbSwingAmount, float partialTicks,
+                                                                          float ageInTicks, float netHeadYaw, float headPitch) {
+        if (!slotContext.identifier().equals("belt")) return;
+        if (stack.isEmpty() || !stack.is(net.satisfy.beachparty.core.registry.ObjectRegistry.RUBBER_RING_BLUE.get()))
+            return;
         LivingEntity livingEntity = slotContext.entity();
         if (livingEntity == null) return;
-
         model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
         matrixStack.pushPose();
-        renderColoredCutoutModel(model, texture, matrixStack, renderTypeBuffer, light, livingEntity, 0.0f, 0.0f, 1.0f);
+        matrixStack.translate(0.1F, -0.6F, -0.5F);
+        model.renderToBuffer(matrixStack, renderTypeBuffer.getBuffer(RenderType.entityCutoutNoCull(texture)),
+                light, OverlayTexture.NO_OVERLAY, 0.0f, 0.0f, 1.0f, 1.0f);
         matrixStack.popPose();
-    }
-
-    private static <T extends LivingEntity, M extends EntityModel<T>> void renderColoredCutoutModel(M model, ResourceLocation texture, PoseStack poseStack, MultiBufferSource buffer, int light, T entity, float red, float green, float blue) {
-        poseStack.pushPose();
-        model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutoutNoCull(texture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
-        poseStack.popPose();
     }
 }

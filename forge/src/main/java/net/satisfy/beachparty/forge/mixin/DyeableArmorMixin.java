@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("all")
 @Mixin(DyeableBeachpartyArmorItem.class)
 public abstract class DyeableArmorMixin extends DyeableArmorItem {
 
