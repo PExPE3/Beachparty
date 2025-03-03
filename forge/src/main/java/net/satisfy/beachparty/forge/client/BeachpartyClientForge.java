@@ -18,12 +18,8 @@ import net.satisfy.beachparty.Beachparty;
 import net.satisfy.beachparty.client.BeachPartyClient;
 import net.satisfy.beachparty.core.entity.PalmBoatEntity;
 import net.satisfy.beachparty.core.registry.ObjectRegistry;
-import net.satisfy.beachparty.forge.client.integration.CuriosRubberRingBlueRenderer;
-import net.satisfy.beachparty.forge.client.integration.CuriosTrunksRenderer;
-import net.satisfy.beachparty.forge.client.integration.CuriosBikiniRenderer;
-import net.satisfy.beachparty.forge.client.renderer.player.layers.BikiniLayer;
-import net.satisfy.beachparty.forge.client.renderer.player.layers.RubberRingBlueLayer;
-import net.satisfy.beachparty.forge.client.renderer.player.layers.TrunksLayer;
+import net.satisfy.beachparty.forge.client.integration.*;
+import net.satisfy.beachparty.forge.client.renderer.player.layers.*;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.function.Function;
@@ -42,11 +38,11 @@ public class BeachpartyClientForge {
             BeachPartyClient.initClient();
             CuriosRendererRegistry.register(ObjectRegistry.BIKINI.get(), CuriosBikiniRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.TRUNKS.get(), CuriosTrunksRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), CuriosRubberRingBlueRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosRubberRingBlueRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosRubberRingBlueRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PELICAN.get(), CuriosTrunksRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), CuriosTrunksRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), CuriosRubberRingRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosRubberRingRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosRubberRingRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PELICAN.get(), CuriosRubberRingPelicanRenderer::new);
+            CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_AXOLOTL.get(), CuriosRubberRingAxolotlRenderer::new);
         });
     }
 
@@ -67,8 +63,14 @@ public class BeachpartyClientForge {
         addLayerToPlayerSkin(event, "default", TrunksLayer::new);
         addLayerToPlayerSkin(event, "slim", TrunksLayer::new);
 
-        addLayerToPlayerSkin(event, "default", RubberRingBlueLayer::new);
-        addLayerToPlayerSkin(event, "slim", RubberRingBlueLayer::new);
+        addLayerToPlayerSkin(event, "default", RubberRingLayer::new);
+        addLayerToPlayerSkin(event, "slim", RubberRingLayer::new);
+
+        addLayerToPlayerSkin(event, "default", RubberRingAxolotlLayer::new);
+        addLayerToPlayerSkin(event, "slim", RubberRingAxolotlLayer::new);
+
+        addLayerToPlayerSkin(event, "default", RubberRingPelicanLayer::new);
+        addLayerToPlayerSkin(event, "slim", RubberRingPelicanLayer::new);
     }
 
     private static <E extends Player, M extends HumanoidModel<E>>
