@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.satisfy.beachparty.client.model.BikiniModel;
 import net.satisfy.beachparty.core.item.DyeableBeachpartyArmorItem;
 import net.satisfy.beachparty.core.util.BeachpartyIdentifier;
+import org.joml.Quaternionf;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
@@ -39,6 +40,10 @@ public class CuriosBikiniRenderer implements ICurioRenderer {
         float green = ((colorInt >> 8) & 0xFF) / 255f;
         float blue = (colorInt & 0xFF) / 255f;
         model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        if (livingEntity.isCrouching()) {
+            matrixStack.translate(0F, 0.2F, 0F);
+            matrixStack.mulPose(new Quaternionf().rotationX((float) Math.toRadians(20)));
+        }
         matrixStack.pushPose();
         renderColoredCutoutModel(model, texture, matrixStack, renderTypeBuffer, light, livingEntity, red, green, blue);
         matrixStack.popPose();

@@ -36,8 +36,6 @@ public class BeachpartyClientForge {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             BeachPartyClient.initClient();
-            CuriosRendererRegistry.register(ObjectRegistry.BIKINI.get(), CuriosBikiniRenderer::new);
-            CuriosRendererRegistry.register(ObjectRegistry.TRUNKS.get(), CuriosTrunksRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_BLUE.get(), CuriosRubberRingRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_PINK.get(), CuriosRubberRingRenderer::new);
             CuriosRendererRegistry.register(ObjectRegistry.RUBBER_RING_STRIPPED.get(), CuriosRubberRingRenderer::new);
@@ -56,20 +54,11 @@ public class BeachpartyClientForge {
 
     @SubscribeEvent
     public static void registerLayersForRenderers(EntityRenderersEvent.AddLayers event) {
-
-        addLayerToPlayerSkin(event, "default", BikiniLayer::new);
-        addLayerToPlayerSkin(event, "slim", BikiniLayer::new);
-
-        addLayerToPlayerSkin(event, "default", TrunksLayer::new);
-        addLayerToPlayerSkin(event, "slim", TrunksLayer::new);
-
         addLayerToPlayerSkin(event, "default", RubberRingLayer::new);
-        addLayerToPlayerSkin(event, "slim", RubberRingLayer::new);
-
+        addLayerToPlayerSkin(event, "default", RubberRingPelicanLayer::new);
         addLayerToPlayerSkin(event, "default", RubberRingAxolotlLayer::new);
         addLayerToPlayerSkin(event, "slim", RubberRingAxolotlLayer::new);
-
-        addLayerToPlayerSkin(event, "default", RubberRingPelicanLayer::new);
+        addLayerToPlayerSkin(event, "slim", RubberRingLayer::new);
         addLayerToPlayerSkin(event, "slim", RubberRingPelicanLayer::new);
     }
 

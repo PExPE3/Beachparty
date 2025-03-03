@@ -123,5 +123,7 @@
   "tooltip.beachparty.effect.item.beachparty.swim_wings": "Reduces Fall Damage by 50%",
   "tooltip.beachparty.effect.item.beachparty.trunks": "Increases Swim Speed by 8%",
   "tooltip.beachparty.message": "Right-Click to Open",
-  "tooltip.beachparty.trinketsslot": "When equipped in Trinket Slot:"
+  "tooltip.beachparty.trinketsslot": "When equipped in Trinket Slot:",
+  "tooltip.beachparty.curiosslot": "When equipped in Curios Slot:",
+  "curios.identifier.feet": "Feet"
 }
